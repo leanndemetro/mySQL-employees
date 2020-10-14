@@ -86,7 +86,7 @@ function viewByDepartment() {
 }
 
 function viewByRole() {
-    //function that renders all rolesand which employees belong to which within a table (console.table)
+    //function that renders all roles and which employees belong to which within a table (console.table)
 }
 
 //funcion that creates a new employee with the input data
@@ -116,19 +116,19 @@ function newEmployee(answers) {
         .then(answers => {
             console.log(answers);
         });
-    //push answers into mysql table
+    //push answers into employee db, and have them immediately return within the view employees table  using db functions.
 }
 
 function newDepartment() {
-
+//function that creates a new department and add it into the database using db functions
 }
 
 function newRole() {
-
+//function that creates a new role and adds it into the database  using db functions
 }
 
 function updateRole() {
-
+//function that deleted an employee's current role assignment and replaced it with an updated one  using db functions
 }
 
 
