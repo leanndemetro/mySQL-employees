@@ -38,21 +38,59 @@ function loadPrompts(answer) {
                 name: 'toDo',
                 message: 'What would you like to do?',
                 choices: [
-                    'View All Employees', 'View By Department', 'View By Role', 'View By Role', 'Add Employee', 'Add Department', 'Add Role', 'Update an Employee Role',],
+                    'View All Employees', 'View By Department', 'View By Role', 'Add Employee', 'Add Department', 'Add Role', 'Update an Employee Role',]
             },
         ])
 
         .then(answers => {
 
+            if (answers.toDo === 'View All Employees') {
+                viewAllEmployees();
+            }
+            if (answers.toDo === 'View By Department') {
+                viewByDepartment();
+            }
+            if (answers.toDo === 'View By Role') {
+                viewByRole();
+            }
             if (answers.toDo === 'Add Employee') {
                 newEmployee();
+            }
+            if (answers.toDo === 'Add Department') {
+                newDepartment();
+            }
+            if (answers.toDo === 'Add Role') {
+                newRole();
+            }
+            if (answers.toDo === 'Update an Employee Role') {
+                updateRole();
             }
         })
 }
 
+function viewAllEmployees() {
+    let query = "SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name FROM employee INNER JOIN role ON (employee.role_id = role.id) INNER JOIN department ON (role.department_id = department.id)";
+    connection.query(query, function(err, res){
+        if (err) throw err;
+        console.log("\nHere are all employees\n\n==============\n");
+        console.table(res);
+        console.log("\n==============\n");
+        loadPrompts();
+    });
+}
+    
 
 
-function newEmployee() {
+function viewByDepartment() {
+    //function that renders all departments and which employees belong to which within a table (console.table)
+}
+
+function viewByRole() {
+    //function that renders all rolesand which employees belong to which within a table (console.table)
+}
+
+//funcion that creates a new employee with the input data
+function newEmployee(answers) {
     inquirer.prompt([
         {
             name: "first_name",
@@ -63,21 +101,35 @@ function newEmployee() {
             message: "What is the employee's last name?"
         },
         {
+            type: "list",
             name: "manager_id",
-            message: "What is the employee's manager?"
+            message: "Who is the employee's manager?",
+            choices: ['Mike Chan', 'Kevin Tupik', 'Malia Brown', 'Tom Allen']
         },
         {
+            type: "list",
             name: "role_id",
-            message: "What is the employee's role?"
+            message: "What is the employee's role?",
+            choices: ['Sales Lead', 'Salesperson', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead', 'Lawyer']
         }
     ])
         .then(answers => {
-            console.log(answers.first_name);
+            console.log(answers);
         });
+    //push answers into mysql table
+}
+
+function newDepartment() {
 
 }
 
+function newRole() {
 
+}
+
+function updateRole() {
+
+}
 
 
 
